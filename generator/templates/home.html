@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roast or Toast Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #2c2c2c; /* Dark Grey */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #653facca;
+            margin-bottom: 20px;
+            animation: textAnimation 2s ease-in-out;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #ffffff;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+            animation-delay: 1s;
+        }
+
+        p {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+            animation-delay: 2s;
+            text-shadow: 0 0 5px #fff, 0 0 10px #2cd5e1;
+        }
+
+        .button {
+            font-size: 1.5rem;
+            padding: 12px 40px;
+            background: linear-gradient(145deg, #2884b9, #7f8f9bc7);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(51, 224, 255, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 87, 51, 0.5);
+        }
+
+        .button:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 10px rgba(255, 87, 51, 0.3);
+        }
+
+        .button a {
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Animation for Text */
+        @keyframes textAnimation {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Emoji sparkle animation */
+        @keyframes emojiSparkles {
+            0% {
+                transform: scale(1) translateX(0) translateY(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) translateX(10px) translateY(-10px);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1) translateX(0) translateY(0);
+                opacity: 0;
+            }
+        }
+
+        .sparkle-emoji {
+            font-size: 4rem;
+            position: absolute;
+            animation: emojiSparkles 1.5s infinite ease-in-out;
+        }
+
+        .laughing-emoji {
+            color: #ffdd00;
+        }
+
+        .crying-emoji {
+            color: #00b0ff;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            .button {
+                padding: 10px 30px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Roast or Toast Generator</h1>
+        <h2>Your {{ response_type }}:</h2>
+        <p>{{ message }}</p>
+
+        <!-- Sparkles Animation for Roast or Toast -->
+        <div id="emoji-container"></div>
+
+        <div>
+            <button class="button"><a href="/">Hit me to face the truth again puthu!</a></button>
+        </div>
+    </div>
+
+    <script>
+        // Function to trigger emoji sparkles for Roast or Toast
+        function triggerEmojiSparkles(responseType) {
+            const numberOfSparkles = 10; // Number of sparkles to show at a time
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+    
+            // Helper function to create and animate sparkles
+            function createSparkle(emoji) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle-emoji');
+                sparkle.innerText = emoji;
+    
+                // Randomize position
+                const xPosition = Math.random() * screenWidth;
+                const yPosition = Math.random() * screenHeight;
+                sparkle.style.left = `${xPosition}px`;
+                sparkle.style.top = `${yPosition}px`;
+    
+                // Random animation duration
+                const duration = Math.random() * (3 - 1) + 1; // Random duration between 1s and 3s
+                sparkle.style.animationDuration = `${duration}s`;
+    
+                document.body.appendChild(sparkle);
+    
+                // Remove the sparkle after animation completes
+                setTimeout(() => {
+                    sparkle.remove();
+                }, duration * 1000); // Convert seconds to milliseconds
+            }
+    
+            // Clear previous sparkles if any
+            const existingSparkles = document.querySelectorAll('.sparkle-emoji');
+            existingSparkles.forEach(sparkle => sparkle.remove());
+    
+            // Depending on response type, show the respective emoji
+            const emoji = responseType === 'Roast' ? '😂' : '🥹'; // Choose emoji based on response type
+    
+            // Generate sparkles for the selected emoji
+            for (let i = 0; i < numberOfSparkles; i++) {
+                createSparkle(emoji);
+            }
+        }
+    
+        // Call the function with the response type you want to show
+        // Example: For Roast or Toast, pass the appropriate type here.
+        const responseType = 'Roast'; // This can be dynamically set from your backend logic
+        triggerEmojiSparkles(responseType);
+    </script>
+    
+</body>
+</html>
