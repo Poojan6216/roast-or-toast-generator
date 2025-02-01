@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6p4@1je78!ptk5x2lkz4+v44jv67n*%2a)=*=kq4_s#k8u&ej3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://roast-or-toast-generator.onrender.com']
 
 
 # Application definition
